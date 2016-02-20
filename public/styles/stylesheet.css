@@ -1,0 +1,34 @@
+html {
+    height: 100%
+}
+
+body {
+    font-family: Courier, "Courier New", monospace;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 1)), url(../img/hammer_and_sickle.png);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+.assign-tasks h1 {
+    padding: 2em;
+    font-weight: bold;
+}
+
+.task-container {
+    width: 250px;
+    display: inline-block;
+    padding: 2em;
+}
+
+.taskHeader, .completedHeader{
+    font-weight: bold;
+    display: inline-block;
+    text-align: left;
+    min-width: 20%;
+}
+.completedHeader {
+    float: right;
+    padding: 0.5em;
+}
