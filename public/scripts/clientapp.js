@@ -91,9 +91,7 @@ function updateCompletedStatus () {
 
 
 function displayTasks(taskList) {
-    //$('.tasks').children().last().append('<li>' + taskList.task_name + '<a href="#" data-id="' + taskList.id +  '" class="deleteTask"><i class="fa fa-trash"></i></a><a href="#" data-id="' + taskList.id +  '" id="complete-task" class="completeTask"><i class="fa fa-check-square-o"></i></a></li>');
-    $('.tasks').children().last().append('<li>' + taskList.task_name + '<a href="#" data-id="' + taskList.id +  '" class="deleteTask"><i class="fa fa-trash"></i></a><a href="#" data-id="' + taskList.id +  '" id="complete-task" class="completeTask"><i class="fa fa-check-square-o"></i></a></li>');
-
+    $('.tasks').children().last().append('<li><p>' + taskList.task_name + '</p><a href="#" data-id="' + taskList.id +  '" class="deleteTask"><i class="fa fa-trash"></i></a><a href="#" data-id="' + taskList.id +  '" id="complete-task" class="completeTask"><i class="fa fa-check-square-o"></i></a></li>');
     console.log(taskList.id);
 }
 
@@ -101,13 +99,9 @@ function deleteTaskFromDOM() {
     $(this).parent().remove();
 }
 
-function removeCompletedTask() {
-    $(this).closest('li').fadeOut(300, function() {
-        $(this).closest('li').remove();
-    });
-}
 
 function displayCompletedTask() {
-    $(this).closest('li').appendTo('.displayedCompleted').children().last();
-    removeCompletedTask();
+    var $clone = $(this).closest('li').find('p').clone();
+    $clone.appendTo('.displayedCompleted').children().last();
+    $(this).parent().remove();
 }
