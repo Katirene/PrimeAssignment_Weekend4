@@ -12,23 +12,61 @@ body {
 
 
 .assign-tasks h1 {
-    padding: 2em;
-    font-weight: bold;
+    padding: 2%;
 }
 
 .task-container {
     width: 250px;
     display: inline-block;
-    padding: 2em;
+    padding: 2%;
 }
 
-.taskHeader, .completedHeader{
+.tasks, .completedTasks {
     font-weight: bold;
-    display: inline-block;
-    text-align: left;
-    min-width: 20%;
+    float: left;
+    width: 46%;
+    position: relative;
+    overflow: hidden;
+    /*display: inline-block;*/
+    /*text-align: left;*/
 }
-.completedHeader {
-    float: right;
-    padding: 0.5em;
+
+.tasks {
+    left: 52%;
 }
+
+.completedTasks {
+    left: 56%;
+}
+
+.innerContainer {
+    float: left;
+    width: 100%;
+    position: relative;
+    right: 50%;
+}
+
+.outerContainer {
+    clear: left;
+    float: left;
+    width: 100%;
+    overflow: hidden;
+}
+.tasks > ul > li {
+    margin: 0.3em 0px;
+}
+
+.tasks > ul > li > a {
+    margin: 0px 0px 0px 1ch;
+}
+
+.completeTask {
+    color: #D4AF37;
+}
+
+.deleteTask {
+    color: #676B6B;
+}
+
+
+

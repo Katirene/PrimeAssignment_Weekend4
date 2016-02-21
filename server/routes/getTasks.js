@@ -15,7 +15,7 @@ if(process.env.DATABASE_URL != undefined) {
 router.get('/', function(req, res) {
     var results = [];
     pg.connect(connectionString, function(err, client, done) {
-        var query = client.query('SELECT task_name FROM tasks;');
+        var query = client.query('SELECT task_name, id FROM tasks;');
 
         query.on('row', function(row) {
             results.push(row);
