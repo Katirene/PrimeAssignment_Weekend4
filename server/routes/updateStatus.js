@@ -21,13 +21,13 @@ router.put('/', function(req, res) {
     pg.connect(connectionString, function (err, client, done) {
         client.query("UPDATE tasks SET is_completed = TRUE WHERE id = ($1) RETURNING id",
             [updateTask.taskId],
-            function (err) {
+            function (err, result) {
                 done();
                 if (err) {
                     console.log('error');
                     res.send('error');
                 } else {
-                    res.send('success');
+                    res.send(result);
                 }
             });
     });

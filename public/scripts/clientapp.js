@@ -3,6 +3,7 @@ $(document).ready(function() {
     $('.displayedInProgress').on('click', '.deleteTask', removeTask);
     $('.displayedInProgress').on('click', '.deleteTask', deleteTaskFromDOM);
     $('.innerContainer').on('click', '.completeTask', updateCompletedStatus);
+    $('.displayedInProgress').on('click', '.completeTask', displayCompletedTask);
 
 
     getTaskData();
@@ -79,7 +80,6 @@ function updateCompletedStatus () {
         data: data,
         success: function (data) {
             console.log(data);
-            displayCompletedTask(data);
             if(data) {
                 console.log('from server:', data);
             } else {
@@ -101,6 +101,8 @@ function deleteTaskFromDOM() {
     $(this).parent().remove();
 }
 
-function displayCompletedTask(taskId) {
-
+function displayCompletedTask() {
+    $(this).closest('li').fadeOut(300, function() {
+        $(this).closest('li').remove();
+    });
 }
