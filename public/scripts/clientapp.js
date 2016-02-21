@@ -68,18 +68,18 @@ function removeTask() {
         }
     });
 }
-
+//changes status of task in db from false to true - returns ID of updated record
 function updateCompletedStatus () {
     event.preventDefault();
     var data = {};
     data['id'] = $(this).data('id');
-
     $.ajax ({
         type: 'PUT',
         url: '/updateStatus',
         data: data,
         success: function (data) {
             console.log(data);
+            displayCompletedTask(data);
             if(data) {
                 console.log('from server:', data);
             } else {
@@ -99,4 +99,8 @@ function displayTasks(taskList) {
 
 function deleteTaskFromDOM() {
     $(this).parent().remove();
+}
+
+function displayCompletedTask(taskId) {
+
 }

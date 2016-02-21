@@ -6,7 +6,7 @@ var path = require('path');
 var postTask = require('./routes/postTask');
 var getTasks = require('./routes/getTasks');
 var removeTask = require('./routes/removeTask');
-var updateStatus = require('/routes/updateStatus');
+var updateStatus = require('./routes/updateStatus');
 
 
 app.use(bodyParser.urlencoded({expanded: true}));
