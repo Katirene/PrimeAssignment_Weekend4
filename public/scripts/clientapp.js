@@ -3,7 +3,7 @@ $(document).ready(function() {
     $('.displayedInProgress').on('click', '.deleteTask', removeTask);
     $('.displayedInProgress').on('click', '.deleteTask', deleteTaskFromDOM);
     $('.innerContainer').on('click', '.completeTask', updateCompletedStatus);
-    $('.displayedInProgress').on('click', '.completeTask', displayCompletedTask);
+    $('.innerContainer').on('click', '.completeTask', displayCompletedTask);
 
 
     getTaskData();
@@ -16,6 +16,10 @@ function postTask() {
     $.each($('#input-task').serializeArray(), function (i, field) {
         values[field.name] = field.value;
     });
+    if (values.postTask == '') {
+        return;
+    }
+    $('#input-task').val('');
     console.log(values);
     $.ajax ({
         type: 'POST',
@@ -32,7 +36,7 @@ function postTask() {
         }
     });
 }
-
+//retrieves all entries from database. Returns the entries and runs the function to display tasks
 function getTaskData() {
     $.ajax({
         type: 'GET',
@@ -40,10 +44,12 @@ function getTaskData() {
         success: function(data) {
             console.log('GET ' + data);
             $('.displayedInProgress').empty();
+            $('.displayedCompleted').empty();
             for (var i = 0; i < data.length; i++) {
                 var toBePostedTasks = data[i];
                 displayTasks(toBePostedTasks);
                 console.log(toBePostedTasks.task_name);
+                console.log(toBePostedTasks.is_completed);
 
             }
         }
@@ -91,8 +97,11 @@ function updateCompletedStatus () {
 
 
 function displayTasks(taskList) {
-    $('.tasks').children().last().append('<li><p>' + taskList.task_name + '</p><a href="#" data-id="' + taskList.id +  '" class="deleteTask"><i class="fa fa-trash"></i></a><a href="#" data-id="' + taskList.id +  '" id="complete-task" class="completeTask"><i class="fa fa-check-square-o"></i></a></li>');
-    console.log(taskList.id);
+    if (taskList.is_completed == false) {
+        $('.tasks').children().last().append('<li><p>' + taskList.task_name + '</p><a href="#" data-id="' + taskList.id + '" class="deleteTask"><i class="fa fa-trash"></i></a><a href="#" data-id="' + taskList.id + '" id="complete-task" class="completeTask"><i class="fa fa-check-square-o"></i></a></li>');
+    } else {
+        $('.completedTasks').children().last().append('<li><p>' + taskList.task_name + '</p></li>');
+    }
 }
 
 function deleteTaskFromDOM() {
