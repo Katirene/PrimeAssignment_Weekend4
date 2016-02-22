@@ -1,7 +1,6 @@
 $(document).ready(function() {
     $('#post-task').on('click', postTask);
-    $('.displayedInProgress').on('click', '.deleteTask', removeTask);
-    $('.displayedInProgress').on('click', '.deleteTask', deleteTaskFromDOM);
+    $('.displayedInProgress').on('click', '.deleteTask', confirmDelete);
     $('.innerContainer').on('click', '.completeTask', updateCompletedStatus);
     $('.innerContainer').on('click', '.completeTask', displayCompletedTask);
 
@@ -55,19 +54,34 @@ function getTaskData() {
         }
     });
 }
+
+
 //Remove task button matches grabs the id from the button that was clicked
-function removeTask() {
+//first we have to grab the id of the button so it can be used later in the ajax call
+//then a confirm box is alerted. if true we run the ajax removeTask
+function confirmDelete() {
     event.preventDefault();
+    var item = $(this).parent();
     var data = {};
     data['id'] = $(this).data('id');
-    console.log(data);
-    $.ajax ({
+    if(confirm("Loyal Comrade, Are you Sure ?")) {
+        removeTask(data);
+        deleteTaskFromDOM(item);
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+function removeTask(data) {
+    $.ajax({
         type: 'DELETE',
         url: '/removeTask',
         data: data,
         success: function (response) {
             console.log(response);
-            if(response === 'error') {
+            if (response === 'error') {
                 console.log('error from server');
             } else if (response === 'success') {
                 console.log('success from server');
@@ -75,6 +89,7 @@ function removeTask() {
         }
     });
 }
+
 //changes status of task in db from false to true - returns ID of updated record
 function updateCompletedStatus () {
     event.preventDefault();
@@ -104,8 +119,8 @@ function displayTasks(taskList) {
     }
 }
 
-function deleteTaskFromDOM() {
-    $(this).parent().remove();
+function deleteTaskFromDOM(item) {
+    item.remove();
 }
 
 

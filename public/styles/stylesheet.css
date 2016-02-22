@@ -10,7 +10,6 @@ body {
     background-repeat: no-repeat;
 }
 
-
 .assign-tasks h1 {
     padding: 2%;
 }
@@ -27,8 +26,6 @@ body {
     width: 46%;
     position: relative;
     overflow: hidden;
-    /*display: inline-block;*/
-    /*text-align: left;*/
 }
 
 .tasks {
@@ -46,6 +43,10 @@ body {
     right: 50%;
 }
 
+.innerContainer h2 {
+    text-decoration: underline;
+}
+
 .outerContainer {
     clear: left;
     float: left;
@@ -56,8 +57,20 @@ body {
     margin: 0.3em 0px;
 }
 
+.completedTasks > ul > li {
+    margin: 0.3em 0px;
+}
+
 .tasks > ul > li > a {
-    margin: 0px 0px 0px 1ch;
+    margin: 0.15em 0px 0.15em 1ch;
+}
+
+.completedTasks > ul > li > a {
+    margin: 0.15em 0px 0.15em 1ch;
+}
+
+.displayedInProgress,.displayedCompleted {
+
 }
 
 .completeTask {
