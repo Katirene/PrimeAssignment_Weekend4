@@ -2,34 +2,27 @@ var express = require('express');
 var app = express();
 var router = express.Router();
 var bodyParser = require('body-parser');
-var pg = require('pg');
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var postTask = require('./postTask');
+var NewTask = require('./postTask').NewTask;
 
-var connectionString ='';
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
-if(process.env.DATABASE_URL != undefined) {
-    connectionString = process.enn.DATABASE_URL + 'ssl';
-} else {
-    connectionString = 'postgress://localhost:5432/postgres';
-}
 
-router.delete('/', function(req, res) {
+//mongoose.connect('mongodb://localhost/todolist_db');
+
+var NewTask = mongoose.model('NewTask');
+
+router.delete('/:id', function(req, res) {
     console.log(req.body.id);
-    var removeTask = {
-        taskId: req.body.id
-    };
-    console.log(removeTask.taskId);
-    pg.connect(connectionString, function (err, client, done) {
-        client.query("DELETE FROM tasks WHERE id = ($1)",
-            [removeTask.taskId],
-            function (err) {
-                done();
-                if (err) {
-                    console.log('error');
-                    res.send('error');
-                } else {
-                    res.send('success');
-                }
-            });
+    NewTask.findByIdAndRemove({"_id" : req.params.id}, function(err, data) {
+        if(err) {
+            console.log('ERR: ', err);
+        }
+
+        res.send(data);
     });
 });
 

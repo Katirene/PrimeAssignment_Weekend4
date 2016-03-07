@@ -24,11 +24,20 @@ function postTask() {
         type: 'POST',
         url: '/postTask',
         data: values,
-        success: function (data) {
-            console.log(data);
-            if(data) {
-                console.log('from server:', data);
-                getTaskData();
+        success: function (response) {
+            //this response is an array of all of the posted tasks in the database
+            console.log(response);
+            if(response.data) {
+                console.log('from server:', response.data);
+                $('.displayedInProgress').empty();
+                $('.displayedCompleted').empty();
+                for (var i = 0; i < data.length; i++) {
+                    var toBePostedTasks = data[i];
+                    displayTasks(toBePostedTasks);
+                    console.log(toBePostedTasks.task_name);
+                    console.log(toBePostedTasks.is_completed);
+
+                }
             } else {
                 console.log('error');
             }

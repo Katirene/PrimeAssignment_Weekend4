@@ -4,37 +4,48 @@
         <meta charset="UTF-8">
         <title>In solidarity with the people we generate tasks for the Proletariats</title>
         <script type="text/javascript" src="../vendors/jquery.min.js"></script>
-        <script type="text/javascript" src="../scripts/clientapp.js"></script>
+        <script type="text/javascript" src="../vendors/angular.min.js"></script>
+        <script type="text/javascript" src="../vendors/angular-route.min.js"></script>
+        <script type="text/javascript" src="../scripts/app.js"></script>
+        <script type="text/javascript" src="../scripts/factories/dataFactory.js"></script>
+        <script type="text/javascript" src="../scripts/controllers/inProgressController.js"></script>
+        <!--<script type="text/javascript" src="../scripts/clientapp.js"></script>-->
         <link rel="stylesheet" href="http://meyerweb.com/eric/tools/css/reset/reset.css"/>
         <link rel="stylesheet" href="../styles/stylesheet.css" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     </head>
-<body>
-    <div class="container">
+<body ng-app="myApp">
+    <div ng-controller ="InProgressController" class="container">
         <div class="assign-tasks" id="assign-tasks">
             <h1>Fulfill your Duties!</h1>
             <div class="task-container">
                 <div class="post-task">
                     <form id="generate-task">
-                        <label for="input-task">Comrade Duty Creator:</label>
-                        <input type="text" id="input-task" name="postTask" maxlength="255"/>
-                        <button id="post-task">Deploy Task!</button>
+                        <label for="enteredTask">Comrade Duty Creator:</label>
+                        <input type="text" ng-model="enteredTask" name="task" maxlength="255"/>
+                        <button ng-click="addTask()" id="post-task">Deploy Task!</button>
                     </form>
                 </div>
             </div>
-        </div>
-        <div class="outerContainer">
-            <div class="innerContainer">
-                <div class="tasks">
-                    <h2>In progress!</h2>
-                    <ul class="displayedInProgress"></ul>
-                </div>
-                <div class="completedTasks">
-                    <h2>Completed!</h2>
-                    <ul class="displayedCompleted"></ul>
+            <div class="outerContainer">
+                <div class="innerContainer">
+                    <div ng-show="active" class="tasks">
+                        <div>In progress!</div>
+                        <ul class="displayedInProgress">
+                            here
+                            <div ng-repeat="singular in tasksFromDB">
+                                <p>{{singular.task_name}}</p>
+                                <a><button ng-click="deleteTask(singular._id)" class="btn btn-danger"><i class="fa fa-trash"></i></button></a>
+                                <a href="#completed"><button ng-click="storeTask(singular._id)"><i class="fa fa-check-square-o"></i></button></a>
+                            </div>
+                        </ul>
+                    </div>
                 </div>
             </div>
+
         </div>
+        </div>
+    <main ng-view></main>
     </div>
 </body>
 </html>
